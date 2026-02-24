@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XIMERA – Chakravyuh</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= BODY ================= */
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    background:black;
+    color:white;
+}
+/* ================= SMOKE ================= */
+
+.smoke{
+    position:fixed;
+    inset:-20%;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(100,100,100,0.15), transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(80,80,80,0.12), transparent 50%);
+    filter:blur(80px);
+    animation:smokeMove 25s ease-in-out infinite alternate;
+    z-index:0;
+}
+
+@keyframes smokeMove{
+    from{ transform:translate(-5%, -5%) scale(1); }
+    to{ transform:translate(5%, 5%) scale(1.1); }
+}
+
+/* ================= EMBERS ================= */
+
+.embers{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+}
+
+.embers span{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:#d4af37;
+    border-radius:50%;
+    opacity:0.8;
+    animation:rise linear infinite;
+}
+
+@keyframes rise{
+    from{ transform:translateY(0); opacity:1; }
+    to{ transform:translateY(-110vh); opacity:0; }
+}
+
+/* ================= SCREEN ================= */
+
+.screen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:opacity 0.6s ease, transform 0.6s ease;
+    z-index:2;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* ================= HERO ================= */
+
+.hero-card{
+    text-align:center;
+}
+
+.hero-title{
+    font-family:'Cinzel',serif;
+    font-size:90px;
+    color:#d4af37;
+    letter-spacing:6px;
+    margin:0;
+    text-shadow:
+        0 0 20px rgba(212,175,55,0.7),
+        0 0 60px rgba(212,175,55,0.4);
+}
+
+.hero-sub{
+    margin-top:15px;
+    font-family:'Cinzel',serif;
+    font-size:22px;
+    letter-spacing:4px;
+    color:#e6c16d;
+}
+
+.start-btn{
+    margin-top:50px;
+    padding:18px 60px;
+    font-size:16px;
+    letter-spacing:2px;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(to right,#8b1e1e,#b33939);
+    border:1px solid #d4af37;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.start-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px gold;
+}
+
+/* ================= IDENTITY ================= */
+
+.identity-card{
+    width:420px;
+    padding:50px 40px;
+    background:linear-gradient(to bottom,#2b0a0a,#150000);
+    border-radius:18px;
+    border:2px solid #d4af37;
+    text-align:center;
+}
+
+.identity-card h2{
+    font-family:'Cinzel',serif;
+    color:#e6c16d;
+}
+
+.identity-card input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #d4af37;
+    background:#3b0a0a;
+    color:white;
+    margin:25px 0;
+}
+
+.proceed-btn{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    background:#2c3e50;
+    color:white;
+    border:1px solid #d4af37;
+    cursor:pointer;
+}
+
+/* ================= RULES ================= */
+
+.rules-card{
+    width:520px;  /* smaller container */
+    padding:35px;
+    background:#f5e6c8;
+    color:#3b2f1b;
+    border-radius:8px;
+    box-shadow:0 0 30px rgba(0,0,0,0.7);
+}
+
+.rules-card h2{
+    font-family:'Cinzel',serif;
+    font-size:28px;
+    color:#7a2f14;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.rules-list{
+    font-size:17px;
+    line-height:1.6;
+}
+
+.rules-list li{
+    margin-bottom:12px;
+}
+
+.enter-btn{
+    margin-top:20px;
+    display:block;
+    width:100%;
+    padding:14px;
+    background:#8b2d0f;
+    color:white;
+    border:none;
+    font-family:'Cinzel',serif;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* ================= TRANSITIONS ================= */
+
+.fade-in{
+    animation:fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:scale(0.95); }
+    to{ opacity:1; transform:scale(1); }
+}
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+    position:fixed;
+    top:20px;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 60px;   /* increased safe padding */
+    font-weight:bold;
+    z-index:10;
+}
+
+.timer-box{
+    background:#1a0a0a;
+    padding:12px 28px;
+    border-radius:14px;
+    border:2px solid #d4af37;
+    font-size:20px;
+    min-width:120px;   
+    margin-right: 70px;       /* prevents shrinking */
+    text-align:center;
+}
+
+/* ================= QUESTION CARD ================= */
+
+.question-card{
+    width:700px;
+    margin:140px auto;
+    background:linear-gradient(to bottom,#1b1b2b,#0a0a14);
+    padding:40px;
+    border-radius:20px;
+    border:2px solid #d4af37;
+}
+
+.question-header{
+    color:#f5c76e;
+    margin-bottom:20px;
+}
+
+.question-text{
+    font-size:22px;
+    margin-bottom:30px;
+}
+
+.option{
+    background:#111827;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.option:hover{
+    background:#1f2937;
+}
+
+/* ================= GATE ================= */
+
+.gate-overlay{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    transition:opacity 0.6s ease;
+}
+
+.gate-text{
+    font-size:40px;
+    font-family:'Cinzel',serif;
+    color:#d4af37;
+}
+
+.smoke,
+.embers {
+    pointer-events: none !important;
+}
+
+/* ================= END SCREEN ================= */
+
+.end-screen{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-family:'Cinzel',serif;
+}
+
+.end-screen h1{
+    font-size:50px;
+    color:#d4af37;
+}
+
+</style>
+</head>
+
+<body>
+<div class="smoke"></div>
+<div class="embers" id="embers"></div>
+
+<!-- HERO -->
+<div id="hero" class="screen">
+    <div class="hero-card fade-in">
+        <h1 class="hero-title">XIMERA</h1>
+        <div class="hero-sub">THE ANALYTICS CHAKRAVYUH</div>
+        <button class="start-btn">⚔ START THE YUDDH ⚔</button>
+    </div>
+</div>
+
+<!-- IDENTITY -->
+<div id="identity" class="screen hidden">
+    <div class="identity-card">
+        <h2>Identity of the Warrior</h2>
+        <p>"Enter your team name, O Brave One"</p>
+        <input type="text" placeholder="Team Name">
+        <button class="proceed-btn">PROCEED TO DHARMA SABHA</button>
+    </div>
+</div>
+
+<!-- RULES -->
+<div id="rules" class="screen hidden">
+    <div class="rules-card">
+        <h2>Rules of Engagement</h2>
+        <ul class="rules-list">
+            <li>You face the Chakravyuh, a 7-layer defensive formation.</li>
+            <li>There are 10 questions per layer.</li>
+            <li>You have 30 minutes to breach all layers.</li>
+            <li>Each correct answer grants 10 points.</li>
+            <li>Upon answering 10 questions, you advance inward.</li>
+            <li>Reach the center to claim victory.</li>
+        </ul>
+        <button class="enter-btn">ENTER THE CHAKRAVYUH</button>
+    </div>
+</div>
+
+
+<div id="gameScreen" class="hidden">
+
+    <div id="gateOverlay" class="gate-overlay hidden">
+        <div class="gate-text" id="gateText"></div>
+    </div>
+
+    <div class="top-bar">
+        <div>🏆 Score: <span id="score">0</span></div>
+        <div>🎯 Layer <span id="layerDisplay">1</span> / 7</div>
+        <div class="timer-box">⏱ <span id="timer">30:00</span></div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            Question <span id="questionNumber">1</span> / 10
+        </div>
+        <div class="question-text" id="questionText"></div>
+
+        <div class="option" onclick="selectAnswer('A')" id="optA"></div>
+        <div class="option" onclick="selectAnswer('B')" id="optB"></div>
+        <div class="option" onclick="selectAnswer('C')" id="optC"></div>
+        <div class="option" onclick="selectAnswer('D')" id="optD"></div>
+    </div>
+
+</div>
+
+<script>
+/* Screen transitions */
+const hero = document.getElementById("hero");
+const identity = document.getElementById("identity");
+const rules = document.getElementById("rules");
+
+document.querySelector(".start-btn").onclick = () => {
+    hero.classList.add("hidden");
+    identity.classList.remove("hidden");
+};
+
+document.querySelector(".proceed-btn").onclick = () => {
+    identity.classList.add("hidden");
+    rules.classList.remove("hidden");
+};
+
+document.querySelector(".enter-btn").onclick = () => {
+    rules.classList.add("hidden");
+    document.getElementById("gameScreen").classList.remove("hidden");
+
+    loadQuestion();
+    startTimer();
+};
+/* Create embers */
+const emberContainer = document.getElementById("embers");
+
+for(let i=0;i<40;i++){
+    let ember = document.createElement("span");
+    ember.style.left = Math.random()*100 + "vw";
+    ember.style.top = Math.random()*100 + "vh";
+    ember.style.animationDuration = (5 + Math.random()*6) + "s";
+    emberContainer.appendChild(ember);
+}
+
+/* ================= QUESTIONS ================= */
+
+const questions = [
+{q:"Mean is sensitive to outliers.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"Which Excel function calculates average?", options:{A:"MEAN",B:"AVERAGE",C:"AVG",D:"SUM"}, ans:"B"},
+{q:"In SQL, which clause filters rows before aggregation?", options:{A:"WHERE",B:"HAVING",C:"GROUP BY",D:"ORDER BY"}, ans:"A"},
+{q:"Standard deviation measures:", options:{A:"Central value",B:"Spread",C:"Correlation",D:"Accuracy"}, ans:"B"},
+{q:"COUNT(*) returns:", options:{A:"Non-null values only",B:"All rows",C:"Unique rows",D:"Numeric rows"}, ans:"B"},
+{q:"Logistic regression is used for:", options:{A:"Clustering",B:"Classification",C:"Forecasting",D:"PCA"}, ans:"B"},
+{q:"Median is robust to extreme values.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"In Pandas, head() returns:", options:{A:"Last rows",B:"First rows",C:"Summary",D:"Columns"}, ans:"B"},
+{q:"Accuracy is best used for:", options:{A:"Imbalanced classification",B:"Regression",C:"Balanced classification",D:"Clustering"}, ans:"C"},
+{q:"VLOOKUP searches:", options:{A:"Vertically",B:"Horizontally",C:"Both",D:"None"}, ans:"A"},
+
+{q:"INNER JOIN returns:", options:{A:"All rows",B:"Matching rows",C:"Non-matching rows",D:"Duplicates"}, ans:"B"},
+{q:"One-hot encoding increases dimensionality.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"train_test_split is used to:", options:{A:"Scale data",B:"Split dataset",C:"Encode variables",D:"Visualize"}, ans:"B"},
+{q:"Correlation implies causation.", options:{A:"True",B:"False"}, ans:"B"},
+{q:"GROUP BY is used for:", options:{A:"Sorting",B:"Filtering",C:"Aggregation",D:"Joining"}, ans:"C"},
+{q:"Missing values can be handled using:", options:{A:"dropna()",B:"remove()",C:"delete()",D:"filter()"}, ans:"A"},
+{q:"Execution order in SQL begins with:", options:{A:"SELECT",B:"FROM",C:"WHERE",D:"GROUP BY"}, ans:"B"},
+{q:"Scatter plot shows:", options:{A:"Trend",B:"Distribution",C:"Relationship",D:"Category share"}, ans:"C"},
+{q:"F1 Score is useful when:", options:{A:"Balanced data",B:"Imbalanced data",C:"Regression",D:"Forecasting"}, ans:"B"},
+{q:"COUNT(column) ignores NULL values.", options:{A:"True",B:"False"}, ans:"A"},
+
+{q:"p-value < 0.05 means:", options:{A:"Accept null",B:"Reject null",C:"Ignore null",D:"Modify null"}, ans:"B"},
+{q:"R² can be negative.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"Overfitting occurs when:", options:{A:"Model too simple",B:"Model memorizes data",C:"Data too large",D:"Low variance"}, ans:"B"},
+{q:"Underfitting occurs when:", options:{A:"Model too simple",B:"Model too complex",C:"Too many features",D:"Perfect fit"}, ans:"A"},
+{q:"KNN is:", options:{A:"Linear model",B:"Distance-based",C:"Tree-based",D:"Probabilistic"}, ans:"B"},
+{q:"ROC curve plots:", options:{A:"Precision vs Recall",B:"TPR vs FPR",C:"Accuracy vs Loss",D:"F1 vs Recall"}, ans:"B"},
+{q:"PCA reduces:", options:{A:"Samples",B:"Noise only",C:"Dimensionality",D:"Target"}, ans:"C"},
+{q:"Decision Trees are prone to overfitting.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"Bias-variance tradeoff balances:", options:{A:"Bias & Variance",B:"Accuracy & Speed",C:"Recall & Precision",D:"Features & Samples"}, ans:"A"},
+{q:"Variance is square of standard deviation.", options:{A:"True",B:"False"}, ans:"A"},
+
+{q:"High bias means:", options:{A:"Overfitting",B:"Underfitting",C:"Leakage",D:"Perfect fit"}, ans:"B"},
+{q:"High variance means:", options:{A:"Underfitting",B:"Overfitting",C:"Regularization",D:"Scaling"}, ans:"B"},
+{q:"Increasing model complexity increases:", options:{A:"Bias",B:"Variance",C:"Sample size",D:"Scaling"}, ans:"B"},
+{q:"Regularization helps reduce:", options:{A:"Bias",B:"Variance",C:"Accuracy",D:"Samples"}, ans:"B"},
+{q:"Early stopping prevents:", options:{A:"Underfitting",B:"Overfitting",C:"Leakage",D:"Scaling"}, ans:"B"},
+{q:"If both train & test accuracy are low:", options:{A:"Overfitting",B:"Underfitting",C:"Leakage",D:"Perfect fit"}, ans:"B"},
+{q:"L2 regularization penalizes:", options:{A:"Absolute weights",B:"Squared weights",C:"Predictions",D:"Errors"}, ans:"B"},
+{q:"Cross-validation mainly reduces:", options:{A:"Bias",B:"Variance in evaluation",C:"Features",D:"Leakage"}, ans:"B"},
+{q:"Adding irrelevant features increases:", options:{A:"Bias",B:"Variance",C:"Accuracy",D:"Stability"}, ans:"B"},
+{q:"Data leakage causes:", options:{A:"Low train accuracy",B:"Unrealistically high validation score",C:"Underfitting",D:"Scaling error"}, ans:"B"},
+
+{q:"DISTINCT removes duplicates.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"LEFT JOIN keeps all left rows.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"NULL = NULL returns:", options:{A:"True",B:"False",C:"NULL",D:"0"}, ans:"C"},
+{q:"HAVING works with:", options:{A:"SELECT",B:"GROUP BY",C:"WHERE",D:"JOIN"}, ans:"B"},
+{q:"UNION removes duplicates by default.", options:{A:"True",B:"False"}, ans:"A"},
+{q:"RANK() is a:", options:{A:"Aggregate function",B:"Window function",C:"Filter",D:"Join"}, ans:"B"},
+{q:"Index improves:", options:{A:"Insert speed",B:"Query speed",C:"Accuracy",D:"Aggregation"}, ans:"B"},
+{q:"Subquery can be used in:", options:{A:"SELECT",B:"FROM",C:"WHERE",D:"All of these"}, ans:"D"},
+{q:"CTE stands for:", options:{A:"Common Table Expression",B:"Central Table Entity",C:"Core Table Execution",D:"Custom Table Entry"}, ans:"A"},
+{q:"WHERE cannot be used with aggregate functions directly.", options:{A:"True",B:"False"}, ans:"A"},
+
+{q:"Lowering classification threshold increases:", options:{A:"Precision",B:"Recall",C:"Bias",D:"Variance"}, ans:"B"},
+{q:"Precision is low when:", options:{A:"Many false positives",B:"Many false negatives",C:"Perfect model",D:"Balanced dataset"}, ans:"A"},
+{q:"Recall is low when:", options:{A:"Many false positives",B:"Many false negatives",C:"No errors",D:"Perfect classification"}, ans:"B"},
+{q:"AUC = 0.5 means:", options:{A:"Perfect",B:"Random",C:"Overfitting",D:"Leakage"}, ans:"B"},
+{q:"If dataset is 90% class 0, naive accuracy is:", options:{A:"50%",B:"70%",C:"90%",D:"10%"}, ans:"C"},
+{q:"SMOTE is used for:", options:{A:"Scaling",B:"Class imbalance",C:"Encoding",D:"Sorting"}, ans:"B"},
+{q:"If validation >> test score, likely:", options:{A:"Good generalization",B:"Leakage",C:"Scaling issue",D:"Perfect fit"}, ans:"B"},
+{q:"High training accuracy & low test accuracy means:", options:{A:"Underfitting",B:"Overfitting",C:"Leakage",D:"Bias"}, ans:"B"},
+{q:"Tree models require scaling.", options:{A:"True",B:"False"}, ans:"B"},
+{q:"If precision high & recall low, model has:", options:{A:"Many false positives",B:"Many false negatives",C:"Perfect balance",D:"Overfitting"}, ans:"B"},
+
+{q:"Multicollinearity affects:", options:{A:"Tree models",B:"Linear models",C:"KNN",D:"Clustering"}, ans:"B"},
+{q:"Increasing regularization generally:", options:{A:"Increases variance",B:"Decreases variance",C:"Removes bias",D:"Causes leakage"}, ans:"B"},
+{q:"If both train & test accuracy high but real-world low, likely:", options:{A:"Underfitting",B:"Overfitting to validation",C:"Scaling issue",D:"Missing data"}, ans:"B"},
+{q:"Cross-validation helps in:", options:{A:"Cleaning",B:"Model selection",C:"Encoding",D:"Scaling"}, ans:"B"},
+{q:"If model AUC 0.98 on small dataset, likely:", options:{A:"Perfect model",B:"Leakage",C:"Underfitting",D:"Imbalance"}, ans:"B"},
+{q:"Increasing tree depth increases:", options:{A:"Bias",B:"Variance",C:"Regularization",D:"Scaling"}, ans:"B"},
+{q:"If two features are perfectly correlated, impact on linear regression:", options:{A:"No issue",B:"Instability",C:"Better fit",D:"Less variance"}, ans:"B"},
+{q:"Reducing features using PCA may:", options:{A:"Increase bias",B:"Increase variance",C:"Remove leakage",D:"Increase imbalance"}, ans:"A"},
+{q:"Best metric for severe imbalance:", options:{A:"Accuracy",B:"RMSE",C:"F1 Score",D:"R²"}, ans:"C"},
+{q:"If recall increases significantly after threshold reduction, precision will:", options:{A:"Increase",B:"Decrease",C:"Stay same",D:"Become 1"}, ans:"B"}
+];
+
+/* ================= GAME LOGIC ================= */
+
+let currentIndex=0;
+let score=0;
+let timeLeft=1800;
+
+function loadQuestion(){
+    const q=questions[currentIndex];
+    document.getElementById("questionText").textContent=q.q;
+    document.getElementById("questionNumber").textContent=(currentIndex%10)+1;
+    document.getElementById("layerDisplay").textContent=Math.floor(currentIndex/10)+1;
+
+    ["A","B","C","D"].forEach(letter=>{
+        const el=document.getElementById("opt"+letter);
+        if(q.options[letter]){
+            el.style.display="block";
+            el.textContent=letter+". "+q.options[letter];
+        } else{
+            el.style.display="none";
+        }
+    });
+}
+
+function selectAnswer(choice){
+    if(choice===questions[currentIndex].ans){
+        score+=10;
+        document.getElementById("score").textContent=score;
+    }
+
+    currentIndex++;
+
+    if(currentIndex%10===0 && currentIndex<70){
+        showGate("Entering Level "+(Math.floor(currentIndex/10)+1));
+        setTimeout(loadQuestion,1200);
+    }
+    else if(currentIndex>=70){
+        endGame();
+    }
+    else{
+        loadQuestion();
+    }
+}
+
+function showGate(text){
+    const gate=document.getElementById("gateOverlay");
+    document.getElementById("gateText").textContent=text;
+    gate.classList.remove("hidden");
+    setTimeout(()=>gate.classList.add("hidden"),1000);
+}
+
+function startTimer(){
+    const timerEl=document.getElementById("timer");
+    const interval=setInterval(()=>{
+        let m=Math.floor(timeLeft/60);
+        let s=timeLeft%60;
+        timerEl.textContent=`${m}:${s<10?"0"+s:s}`;
+        timeLeft--;
+        if(timeLeft<0){
+            clearInterval(interval);
+            endGame();
+        }
+    },1000);
+}
+
+function endGame(){
+    document.body.innerHTML=`
+    <div class="end-screen">
+        <h1>You Reached The Center!</h1>
+        <p style="color:#f5c76e;font-size:25px;">Final Score: ${score}</p>
+    </div>`;
+}
+
+
+
+</script>
+
+</body>
+</html>
